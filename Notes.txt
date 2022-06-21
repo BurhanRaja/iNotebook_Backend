@@ -1,4 +1,0 @@
-# Backend of iNotebook
-
-1. Connected to MongoDB
-2. Routes Connected and models created 
