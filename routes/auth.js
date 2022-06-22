@@ -6,14 +6,16 @@ const jwt = require('jsonwebtoken')
 
 const router = express.Router()
 
-// POST request from the "api/auth" in routes
+
+
+// ROUTE-1 :- POST request from the "api/auth" in routes
 // Full path :- "api/auth/createuser"
 router.post('/createuser',
     [
         // Validating if the given user input is as per requirements or not
-        body('name', "Please enter at least 3 characters.").isLength({ min: 3 }),
-        body('email').isEmail(),
-        body('password', "Please enter at least 5 characters.").isLength({ min: 5 })
+        body('name', "Please enter at least 3 characters in name.").isLength({ min: 3 }),
+        body('email', "Please enter a valid email.").isEmail(),
+        body('password', "Please enter at least 5 characters in password.").isLength({ min: 5 })
     ],
     async (req, res) => {
         // Checking for any errors, if any Display.
@@ -57,8 +59,65 @@ router.post('/createuser',
 
         catch (error) {
             console.error(error.message)
-            res.status(500).json({ error: "Internal Server Error." })
+            res.status(500).send({ error: "Internal Server Error." })
         }
     })
+
+
+
+
+// ROUTE-2 :- POST request from the "api/auth" in routes
+// Full path :- "api/auth/login"
+router.post('/login', 
+    [
+        body('email', "Please enter a valid email.").isEmail(),
+        body('password', "Password cannot be blank").exists()
+    ], async (req, res) => {
+
+        // Checking for any errors, if any Display.
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        
+        try {
+            // Getting the data from req
+            const {email, password} = req.body
+            // Finding user with the given email
+            let user = await User.findOne({email})
+
+            // Check if email exists
+            if (!user) {
+                return res.status(400).json({error: "Invalid email or password."})
+            }
+
+            // Check if password exists
+            const passwordCompare = await bcrypt.compare(password, user.password)
+            if (!passwordCompare) {
+                return res.status(400).json({error: "Invalid email or password."})
+            }
+
+            // JWT Web Tokens handled here
+            require('dotenv').config()
+            let privateKey = process.env.JWT_SECRET_KEY // Secret Key
+
+            // Data to send
+            const data = {
+                user: {
+                    id: user.id
+                }
+            }
+            // Sending Authentication token to client
+            let authToken = jwt.sign(data, privateKey)
+            res.json({authToken})
+        } 
+        
+        catch (error) {
+            console.error(error.message)
+            res.status(500).send({ error: "Internal Server Error." })
+        }
+
+        
+})
 
 module.exports = router
