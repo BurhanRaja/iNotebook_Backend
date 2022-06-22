@@ -1,6 +1,8 @@
 const express = require('express')
 const User = require('../models/User')
-const { body, validationResult } = require('express-validator');
+const { body, validationResult } = require('express-validator')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const router = express.Router()
 
@@ -27,13 +29,30 @@ router.post('/createuser',
                 return res.status(400).json({ errors: "User with this email already exists." })
             }
 
+            // Secure Password
+            const salt = await bcrypt.genSalt(10)
+            let securePassword = await bcrypt.hash(req.body.password, salt)
+
             // Waiting for the promises to resolve and creating new user
             user = await User.create({
                 name: req.body.name,
                 email: req.body.email,
-                password: req.body.password,
+                password: securePassword,
             })
-            res.json(user)
+
+            // JWT Web Tokens handled here
+            require('dotenv').config()
+            let privateKey = process.env.JWT_SECRET_KEY // Secret Key
+
+            // Data to send
+            const data = {
+                user: {
+                    id: user.id
+                }
+            }
+            // Sending Authentication token to client
+            let authToken = jwt.sign(data, privateKey)
+            res.json({authToken})
         }
 
         catch (error) {
