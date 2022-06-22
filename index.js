@@ -4,7 +4,7 @@ const express = require('express')
 connectToMongoDb()
 
 const app = express()
-const port = 3000
+const port = 5000
 
 app.use(express.json())
 
@@ -13,9 +13,9 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-// Available Routes
-app.use('/api/auth', require("./routes/auth"))
-app.use('/api/notes', require("./routes/notes"))
+// Available Routes from routes
+app.use('/api/auth', require("./routes/auth")) // Authentication
+app.use('/api/notes', require("./routes/notes")) // Notes
 
 
 app.listen(port, () => {

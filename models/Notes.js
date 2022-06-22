@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
+// Update Schemas for Notes database here
 const NoteSchema = new Schema({
     title: {
         type: String,

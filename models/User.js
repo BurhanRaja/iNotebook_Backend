@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
+// Update Schemas for User database here
 const UserSchema = new Schema({
     name: {
         type: String,
