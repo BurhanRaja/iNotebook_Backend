@@ -3,12 +3,13 @@ const User = require('../models/User')
 const { body, validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const fecthuser = require('../middleware/fetchuser')
 
 const router = express.Router()
 
 
 
-// ROUTE-1 :- POST request from the "api/auth" in routes
+// ROUTE-1 :-  Create a user from POST request "api/auth" in routes
 // Full path :- "api/auth/createuser"
 router.post('/createuser',
     [
@@ -66,7 +67,7 @@ router.post('/createuser',
 
 
 
-// ROUTE-2 :- POST request from the "api/auth" in routes
+// ROUTE-2 :-  Authenticate (login) the user from POST request "api/auth" in routes
 // Full path :- "api/auth/login"
 router.post('/login', 
     [
@@ -116,8 +117,24 @@ router.post('/login',
             console.error(error.message)
             res.status(500).send({ error: "Internal Server Error." })
         }
+})
 
+
+// ROUTE-3 :-  Get logedin User details from POST request "api/auth" in routes
+// This route is to check whether the user is logged in or not and if user can CRUD in website or not if logged in.
+// Full path :- "api/auth/getuser"
+
+router.post('/getuser', fecthuser, async (req, res) => {
+
+    try {
+        const userId = req.user.id
+        const user = await User.findById(userId).select("-password")
+        res.send(user)
+
+    } catch (error) {
         
+    }
+
 })
 
 module.exports = router
