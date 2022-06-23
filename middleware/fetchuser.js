@@ -13,8 +13,6 @@ const fecthuser = (req, res, next) => {
 
     // Verifying the token by comparing id
     const data = jwt.verify(token, privateKey)
-    console.log(data)
-    console.log(data.user)
     req.user = data.user
     next()
 }

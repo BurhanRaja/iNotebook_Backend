@@ -3,6 +3,10 @@ const { Schema } = mongoose
 
 // Update Schemas for Notes database here
 const NoteSchema = new Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users'
+    },
     title: {
         type: String,
         required: true
@@ -23,4 +27,4 @@ const NoteSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('notes', NoteSchema)
+module.exports = mongoose.model('note', NoteSchema)
