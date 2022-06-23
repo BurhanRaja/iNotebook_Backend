@@ -33,6 +33,7 @@ router.post('/addnote',
 
         // Destructuring the req.body
         const {title, description, tags} = req.body;
+        console.log(req.body)
         
         // Creating new Note and saving it
         const notes = new Note({
@@ -50,5 +51,34 @@ router.post('/addnote',
         res.status(500).send({ error: "Internal Server Error." })
     }
 })
+
+
+// ROUTE 3: Update notes of the user from UPDATE request 'api/notes/addnote'
+router.put("/updatenote/:id", fecthuser, async (req, res) => {
+
+    const {title, description, tags} = req.body
+
+    // Creaitng new Note and replacing the given parameter with the old one
+    const newNote = {}
+    if (title){newNote.title = title}
+    if (description){newNote.description = description}
+    if (tags){newNote.tags = tags}
+
+    // To check whether the note exists or not 
+    let note = await Note.findById(req.params.id)
+    if (!note) {
+        return res.status(404).send("Not Found")
+    }
+
+    // To check whether user is genuine or not
+    if (note.user.toString() !== req.user.id) {
+        return res.status(401).send("Unauthorized Access")
+    }
+
+    // Updating using id
+    note = await Note.findByIdAndUpdate(req.params.id, {$set: newNote}, {new: true})
+    res.send(note)
+})
+
 
 module.exports = router
