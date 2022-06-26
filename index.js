@@ -1,11 +1,13 @@
 const connectToMongoDb = require('./db')
 const express = require('express')
+const cors = require('cors')
 
 connectToMongoDb()
 
 const app = express()
 const port = 5000
 
+app.use(cors())
 app.use(express.json())
 
 // Homepage Route
@@ -19,5 +21,5 @@ app.use('/api/notes', require("./routes/notes")) // Notes
 
 
 app.listen(port, () => {
-    console.log(`Example app listening on port https://localhost:${port}`)
+    console.log(`iNotebook app listening on port https://localhost:${port}`)
 })
