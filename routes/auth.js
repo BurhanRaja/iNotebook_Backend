@@ -19,6 +19,9 @@ router.post('/createuser',
         body('password', "Please enter at least 5 characters in password.").isLength({ min: 5 })
     ],
     async (req, res) => {
+        // Success
+        let success = false
+
         // Checking for any errors, if any Display.
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -55,7 +58,8 @@ router.post('/createuser',
             }
             // Sending Authentication token to client
             let authToken = jwt.sign(data, privateKey)
-            res.json({authToken})
+            success = true
+            res.json({success, authToken})
         }
 
         catch (error) {
@@ -74,6 +78,8 @@ router.post('/login',
         body('email', "Please enter a valid email.").isEmail(),
         body('password', "Password cannot be blank").exists()
     ], async (req, res) => {
+        // Success
+        let success = false
 
         // Checking for any errors, if any Display.
         const errors = validationResult(req);
@@ -110,7 +116,8 @@ router.post('/login',
             }
             // Sending Authentication token to client
             let authToken = jwt.sign(data, privateKey)
-            res.json({authToken})
+            success = true
+            res.json({success, authToken})
         } 
         
         catch (error) {
@@ -124,7 +131,7 @@ router.post('/login',
 // This route is to check whether the user is logged in or not and if user can CRUD in website or not if logged in.
 // Full path :- "api/auth/getuser"
 
-router.post('/getuser', fecthuser, async (req, res) => {
+router.get('/getuser', fecthuser, async (req, res) => {
 
     try {
         const userId = req.user.id
@@ -133,7 +140,8 @@ router.post('/getuser', fecthuser, async (req, res) => {
         res.send(user)
 
     } catch (error) {
-        
+        console.error(error.message)
+        res.status(500).send({ error: "Internal Server Error." })
     }
 
 })
