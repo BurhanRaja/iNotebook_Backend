@@ -1,10 +1,13 @@
 {
   "name": "inotebook-backend",
+  "jest": {
+    "verbose": true
+  },
   "version": "1.0.0",
   "description": "iNoteBook - Save and upload your plans, notes and many more on cloud easily with inotebook ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cypress run --browser firefox"
   },
   "author": "Burhan Raja",
   "license": "ISC",

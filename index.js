@@ -10,11 +10,6 @@ const port = 5000
 app.use(cors())
 app.use(express.json())
 
-// Homepage Route
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
-
 // Available Routes from routes
 app.use('/api/auth', require("./routes/auth")) // Authentication
 app.use('/api/notes', require("./routes/notes")) // Notes
@@ -23,3 +18,5 @@ app.use('/api/notes', require("./routes/notes")) // Notes
 app.listen(port, () => {
     console.log(`iNotebook app listening on port https://localhost:${port}`)
 })
+
+module.exports = app
