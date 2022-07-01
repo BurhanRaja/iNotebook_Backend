@@ -7,8 +7,13 @@
   "description": "iNoteBook - Save and upload your plans, notes and many more on cloud easily with inotebook ",
   "main": "index.js",
   "scripts": {
-    "test": "cypress run --browser firefox"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
+  "keywords": [
+    "example",
+    "heroku"
+  ],
   "author": "Burhan Raja",
   "license": "ISC",
   "dependencies": {
@@ -22,5 +27,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.16"
+  },
+  "engines": {
+    "node": "16.15.0"
   }
 }

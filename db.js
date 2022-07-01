@@ -1,11 +1,7 @@
 const mongoose = require('mongoose')
 
 require('dotenv').config()
-username = process.env.DB_USERNAME
-password = process.env.DB_PASSWORD
-dataBaseName = process.env.DB_NAME
-
-const mongoURI = `mongodb+srv://${username}:${password}@cluster0.33e4r.mongodb.net/${dataBaseName}`
+const mongoURI = process.env.MONGODB_URI
 
 
 // Connecting the database 
