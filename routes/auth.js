@@ -127,8 +127,7 @@ router.post('/login',
 })
 
 
-// ROUTE-3 :-  Get logedin User details from POST request "api/auth" in routes
-// This route is to check whether the user is logged in or not and if user can CRUD in website or not if logged in.
+// ROUTE-3 :-  Get logedin User details from GET request "api/auth" in routes
 // Full path :- "api/auth/getuser"
 
 router.get('/getuser', fecthuser, async (req, res) => {
@@ -136,14 +135,12 @@ router.get('/getuser', fecthuser, async (req, res) => {
     try {
         const userId = req.user.id
         const user = await User.findById(userId).select("-password")
-        // console.log(req)
         res.send(user)
 
     } catch (error) {
         console.error(error.message)
         res.status(500).send({ error: "Internal Server Error." })
     }
-
 })
 
 module.exports = router
