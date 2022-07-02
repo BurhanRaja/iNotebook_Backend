@@ -11,6 +11,8 @@ This repo contains the REST API for the iNotebook app. This api is based on the 
 - models
     |------------> Note.js
     |------------> User.js
+
+
 - rotes
     |------------> auth.js
     |------------> notes.js
@@ -28,4 +30,8 @@ This repo contains the REST API for the iNotebook app. This api is based on the 
 
 4. Technologies used for this REST API
 
-5. Requirements
+![image](https://user-images.githubusercontent.com/76507095/176988409-f921fa53-1122-4b3e-abce-3761510a59b5.png)
+
+![image](https://user-images.githubusercontent.com/76507095/176988413-b276b231-be48-4705-9a86-ec05900dbbf8.png)
+
+![image](https://user-images.githubusercontent.com/76507095/176988439-28a480e6-c30a-4361-b0a7-1ff70c2df990.png)
