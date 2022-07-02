@@ -2,7 +2,7 @@
 
 1. Description
 
-This repo contains the REST API for the iNotebook app. This api is based on the CRUD application , i.e. Create Read Update Delete. The use of this application is to help people to save their thoughts, TODOs, quick note and many more. You can add your note with title, description and tag/tags. You have to be logged in to use all CRUD functionalities.
+This repo contains the BackEnd (REST API) i.e. server side rendering for the iNotebook app. This api is based on the CRUD application , i.e. Create Read Update Delete. The use of this application is to help people to save their thoughts, TODOs, quick note and many more. You can add your note with title, description and tag/tags. You have to be logged in to use all CRUD functionalities.
 
 2. Folder Structure
 ```
